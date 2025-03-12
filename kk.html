@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Қалдықтарды қайта өңдеу | Переработка отходов</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #333;
+            --secondary-color: #666;
+            --accent-color: #999;
+            --light-color: #f5f5f5;
+            --transition-speed: 0.5s;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--primary-color);
+            background-color: var(--light-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Градиент для хедера */
+        header {
+            background: linear-gradient(135deg, #333 0%, #666 100%);
+            color: white;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, transparent 20%, #222 150%);
+            opacity: 0.3;
+            z-index: 1;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        /* Навигация */
+        nav {
+            background-color: #222;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            position: relative;
+        }
+        
+        .nav-links a {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: white;
+            text-decoration: none;
+            transition: color var(--transition-speed);
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease, left 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+        
+        /* Секции */
+        section {
+            padding: 5rem 0;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+.section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #333, #999);
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* О переработке */
+        .about-recycling {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .about-text {
+            padding-right: 2rem;
+        }
+        
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .about-image {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            filter: grayscale(100%);
+            transition: filter 0.5s ease;
+        }
+        
+        .about-image:hover img {
+            filter: grayscale(50%);
+        }
+        
+        /* Статистика */
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 2rem;
+            margin: 1rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            flex: 1 1 200px;
+            max-width: 250px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-text {
+            font-size: 1.1rem;
+            color: var(--secondary-color);
+        }
+        
+        /* Шаги переработки */
+        .recycling-steps {
+            background-color: #222;
+            color: white;
+        }
+        
+        .steps-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .step-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+        
+        .step-button {
+            padding: 1rem 2rem;
+            margin: 0.5rem;
+            background: none;
+            border: 2px solid var(--accent-color);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 30px;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+        }
+        
+        .step-button:hover {
+            background-color: rgba(153, 153, 153, 0.2);
+            transform: translateY(-5px);
+        }
+        
+        .step-button.active {
+            background-color: var(--accent-color);
+            color: #222;
+        }
+        
+        .step-content {
+            display: none;
+            opacity: 0;
+            max-width: 800px;
+            text-align: center;
+            padding: 2rem;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .step-content.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .step-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .step-content p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+        
+        /* Контакты */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid var(--accent-color);
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 1rem;
+            color: var(--primary-color);
+            background-color: var(--light-color);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(51, 51, 51, 0.1);
+        }
+        
+        button.submit-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(90deg, #333, #666);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+        
+        button.submit-btn:hover {
+            opacity: 0.9;
+        }
+        
+        /* Футер */
+        footer {
+            background-color: #222;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin: 2rem 0;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .copyright {
+            font-size: 0.9rem;
+            color: #999;
+        }
+        
+        /* Анимации для скролла */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Адаптивность */
+        @media screen and (max-width: 768px) {
+            .about-recycling {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .about-text {
+                padding-right: 0;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                padding: 1rem 0;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .nav-links a {
+                text-align: center;
+                padding: 0.8rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content container">
+            <h1 class="logo">Қалдықтарды қайта өңдеу</h1>
+            <p class="subtitle">Планетамызды сақтау үшін қалдықтарды қайта өңдеудің маңызы мен әдістері</p>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="nav-container container">
+            <ul class="nav-links">  
+                <li><a href="#about">Біз туралы</a></li>
+                <li><a href="#stats">Статистика</a></li>
+                <li><a href="#steps">Қайта өңдеу қадамдары</a></li>
+                <li><a href="#contact">Байланыс</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <main>
+        <section id="about" class="about">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Қайта өңдеу туралы</h2>
+                </div>
+                <div class="about-recycling">
+                    <div class="about-text fade-in">
+                        <h3>Экологиялық тұрақтылықтың кілті</h3>
+                        <p>Қалдықтарды қайта өңдеу — бұл қоршаған ортаны қорғау және табиғи ресурстарды сақтаудың маңызды әдісі. Бұл процесс қалдық материалдарды қайта пайдалануға жарамды өнімдерге айналдырады.</p>
+                        <p>Қайта өңдеу арқылы біз табиғи ресурстарды үнемдеуге, қоқыс полигондарындағы қалдықтарды азайтуға және энергияны үнемдеуге көмектесеміз.</p>
+                        <p>Қазақстанда қайта өңдеу инфрақұрылымы дамып келеді, бірақ барлығымыздың қатысуымыз маңызды.</p>
+                    </div>
+                    <div class="about-image fade-in">
+                        <img src="/api/placeholder/600/400" alt="Қайта өңдеу процесі">
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="stats" class="statistics">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Қайта өңдеу статистикасы</h2>
+                </div>
+                <div class="stats-container">
+                    <div class="stat-item fade-in">
+                        <div class="stat-number" id="stat1">0</div>
+                        <div class="stat-text">Тонна қайта өңделген қалдықтар</div>
+                    </div>
+                    <div class="stat-item fade-in">
+                        <div class="stat-number" id="stat2">0</div>
+                        <div class="stat-text">Сақталған ағаштар</div>
+                    </div>
+                    <div class="stat-item fade-in">
+                        <div class="stat-number" id="stat3">0</div>
+                        <div class="stat-text">Үнемделген энергия (кВт⋅сағ)</div>
+                    </div>
+                    <div class="stat-item fade-in">
+                        <div class="stat-number" id="stat4">0</div>
+                        <div class="stat-text">CO₂ эмиссиясын азайту (тонна)</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="steps" class="recycling-steps">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Қайта өңдеу қадамдары</h2>
+                </div>
+                <div class="steps-container">
+                    <div class="step-tabs">
+                        <button class="step-button active" data-step="step1">1. Жинау</button>
+                        <button class="step-button" data-step="step2">2. Сұрыптау</button>
+                        <button class="step-button" data-step="step3">3. Өңдеу</button>
+                        <button class="step-button" data-step="step4">4. Өндіру</button>
+                        <button class="step-button" data-step="step5">5. Сату</button>
+                    </div>
+                    
+                    <div class="step-content active" id="step1">
+                        <h3>Қалдықтарды жинау</h3>
+                        <p>Қайта өңдеу процесі қалдықтарды жинаудан басталады. Бұл жеке тұлғалар, кәсіпорындар және қоғамдық ұйымдар арқылы жүзеге асырылады.</p>
+                        <p>Қалдықтар арнайы контейнерлерге жиналады, содан кейін қайта өңдеу орталықтарына жеткізіледі.</p>
+                    </div>
+                    
+                    <div class="step-content" id="step2">
+                        <h3>Қалдықтарды сұрыптау</h3>
+                        <p>Қалдықтар жинақталған соң, олар материал түрлері бойынша сұрыпталады: пластик, қағаз, шыны, металл және т.б.</p>
+                        <p>Сұрыптау қолмен де, автоматтандырылған жүйелердің көмегімен де жүргізілуі мүмкін.</p>
+                    </div>
+                    
+                    <div class="step-content" id="step3">
+                        <h3>Қалдықтарды өңдеу</h3>
+                        <p>Сұрыпталған материалдар өңдеуге жіберіледі. Бұл кезеңде қалдық оны қайта пайдалануға дайындау үшін физикалық немесе химиялық өзгерістерге ұшырайды.</p>
+                        <p>Процеске шредеру, жуу, балқыту немесе ыдырату сияқты әртүрлі әдістер кіруі мүмкін.</p>
+                    </div>
+                    
+                    <div class="step-content" id="step4">
+                        <h3>Жаңа өнімдерді өндіру</h3>
+                        <p>Өңделген материалдардан жаңа өнімдер жасалады. Олар жаңа қаптама, киім, құрылыс материалдары немесе күнделікті қолданыстағы басқа да заттар болуы мүмкін.</p>
+                        <p>Бұл кезең қайта өңдеу циклінің маңызды бөлігі болып табылады және қалдықтарды пайдалы өнімге айналдырады.</p>
+                    </div>
+                    
+                    <div class="step-content" id="step5">
+                        <h3>Нарыққа шығару</h3>
+                        <p>Қайта өңделген материалдардан жасалған өнімдер нарыққа шығарылады. Тұтынушылар оларды сатып алу арқылы қайта өңдеу процесіне қолдау көрсетеді.</p>
+                        <p>Қайта өңделген өнімдерді таңдау арқылы біз ресурстарды үнемдеуге және қоршаған ортаны қорғауға үлес қосамыз.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="contact" class="contact">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Бізбен байланыс</h2>
+                </div>
+                <div class="contact-form fade-in">
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Аты-жөні</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Электрондық пошта</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Хабарлама</label>
+                            <textarea id="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Жіберу</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-content container">
+            <p>Қалдықтарды қайта өңдеу бізді тұрақты болашаққа жетелейді. Планетамызды бірге қорғайық!</p>
+            <ul class="footer-links">
+                <li><a href="#about">Біз туралы</a></li>
+                <li><a href="#stats">Статистика</a></li>
+                <li><a href="#steps">Қадамдар</a></li>
+                <li><a href="#contact">Байланыс</a></li>
+            </ul>
+            <div class="copyright">
+                &copy; 2025 Қалдықтарды қайта өңдеу. Барлық құқықтар қорғалған.
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Анимация для скролла
+        document.addEventListener('DOMContentLoaded', function() {
+            // Показать подзаголовок с анимацией
+            setTimeout(function() {
+                document.querySelector('.subtitle').style.opacity = 1;
+                document.querySelector('.subtitle').style.transform = 'translateY(0)';
+            }, 500);
+            
+            // Анимация при скролле
+            const fadeElements = document.querySelectorAll('.fade-in');
+            const sections = document.querySelectorAll('section');
+            function checkFade() {
+                fadeElements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const elementVisible = 150;
+                    
+                    if (elementTop < window.innerHeight - elementVisible) {
+                        element.classList.add('visible');
+                    }
+                });
+                
+                sections.forEach(section => {
+                    const sectionTop = section.getBoundingClientRect().top;
+                    const sectionVisible = 150;
+                    
+                    if (sectionTop < window.innerHeight - sectionVisible) {
+                        section.classList.add('visible');
+                    }
+                });
+            }
+            
+            // Анимация статистики
+            function animateStats() {
+                const stats = [
+                    { id: 'stat1', target: 1000, suffix: '' },
+                    { id: 'stat2', target: 5000, suffix: '' },
+                    { id: 'stat3', target: 800000, suffix: '' },
+                    { id: 'stat4', target: 12000, suffix: '' }
+                ];
+                
+                stats.forEach(stat => {
+                    const element = document.getElementById(stat.id);
+                    const statsSection = document.getElementById('stats');
+                    
+                    if (statsSection.classList.contains('visible')) {
+                        let current = 0;
+                        const increment = stat.target / 100;
+                        const timer = setInterval(() => {
+                            current += increment;
+                            
+                            if (current >= stat.target) {
+                                current = stat.target;
+                                clearInterval(timer);
+                            }
+                            
+                            element.textContent = Math.round(current).toLocaleString() + stat.suffix;
+                        }, 10);
+                    }
+                });
+            }
+            
+            // Переключение вкладок
+            const stepButtons = document.querySelectorAll('.step-button');
+            const stepContents = document.querySelectorAll('.step-content');
+            
+            stepButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const stepId = button.getAttribute('data-step');
+                    
+                    // Удалить активный класс со всех кнопок и содержимого
+                    stepButtons.forEach(btn => btn.classList.remove('active'));
+                    stepContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Добавить активный класс для выбранного шага
+                    button.classList.add('active');
+                    document.getElementById(stepId).classList.add('active');
+                });
+            });
+            
+            // Запустить анимации при загрузке и скролле
+            window.addEventListener('scroll', () => {
+                checkFade();
+                if (document.getElementById('stats').classList.contains('visible')) {
+                    animateStats();
+                }
+            });
+            
+            // Инициализация при загрузке
+            checkFade();
+            
+            // Плавная прокрутка для навигации
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            // Параллакс эффект для хедера
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('header');
+                const scrollY = window.scrollY;
+                
+                header.style.backgroundPosition = `center ${scrollY * 0.5}px`;
+            });
+            
+            // Анимация для формы контакта
+            const formInputs = document.querySelectorAll('.form-group input, .form-group textarea');
+            
+            formInputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.classList.add('focused');
+                });
+                
+                input.addEventListener('blur', function() {
+                    if (this.value === '') {
+                        this.parentElement.classList.remove('focused');
+                    }
+                });
+            });
+            
+            // Отправка формы (например)
+            document.querySelector('.contact-form form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Рахмет! Сіздің хабарламаңыз жіберілді.');
+                this.reset();
+            });
+        });
+    </script>
+</body>
+</html>
